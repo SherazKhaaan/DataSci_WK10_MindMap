@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Data Streams Mind Map</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+      background-color: #f8f9fa;
+    }
+    .container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .mindmap {
+      position: relative;
+      width: 1000px;
+      height: 700px;
+      margin: 20px 0;
+      background-color: #fff;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      overflow: hidden;
+    }
+    .node {
+      position: absolute;
+      padding: 12px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: bold;
+      text-align: center;
+      transition: all 0.3s ease;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+    .node:hover {
+      transform: scale(1.05);
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    }
+    .red {
+      background-color: #ffcccc;
+      border: 2px solid #e60000;
+      color: #990000;
+    }
+    .blue {
+      background-color: #cce5ff;
+      border: 2px solid #0066cc;
+      color: #004080;
+    }
+    .green {
+      background-color: #ccffcc;
+      border: 2px solid #00cc00;
+      color: #006600;
+    }
+    #infoPanel {
+      width: 1000px;
+      min-height: 150px;
+      padding: 15px;
+      margin-top: 20px;
+      background-color: #fff;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      display: none;
+    }
+    .infoTitle {
+      font-size: 1.2em;
+      font-weight: bold;
+      margin-bottom: 10px;
+      color: #333;
+      border-bottom: 2px solid #ddd;
+      padding-bottom: 5px;
+    }
+    .infoContent {
+      line-height: 1.5;
+    }
+    line {
+      stroke: #999;
+      stroke-width: 2;
+    }
+    .legend {
+      margin-top: 20px;
+      display: flex;
+      gap: 20px;
+    }
+    .legendItem {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .legendBox {
+      width: 20px;
+      height: 20px;
+      border-radius: 4px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Data Streams and Streaming Algorithms</h1>
+    <div class="mindmap" id="mindmap">
+      <!-- SVG for connectors -->
+      <svg width="1000" height="700" style="position: absolute; top: 0; left: 0;">
+        <!-- Draw lines between concepts -->
+        <line x1="500" y1="350" x2="200" y2="200" />
+        <line x1="500" y1="350" x2="800" y2="200" />
+        <line x1="500" y1="350" x2="200" y2="500" />
+        <line x1="500" y1="350" x2="800" y2="500" />
+        
+        <!-- Additional lines to sub-nodes -->
+        <!-- Left upper cluster -->
+        <line x1="200" y1="200" x2="100" y2="120" />
+        <line x1="200" y1="200" x2="300" y2="120" />
+        
+        <!-- Right upper cluster -->
+        <line x1="800" y1="200" x2="700" y2="120" />
+        <line x1="800" y1="200" x2="900" y2="120" />
+        
+        <!-- Left lower cluster -->
+        <line x1="200" y1="500" x2="100" y2="580" />
+        <line x1="200" y1="500" x2="300" y2="580" />
+        
+        <!-- Right lower cluster -->
+        <line x1="800" y1="500" x2="700" y2="580" />
+        <line x1="800" y1="500" x2="900" y2="580" />
+      </svg>
+
+      <!-- Main Node -->
+      <div class="node red" style="width: 180px; top: 330px; left: 410px;"
+           onclick="showInfo('Data Streams & Streaming Algorithms',
+           '<ul><li>Potentially infinite sequences of data.</li><li>Requires real-time processing & sub-linear memory.</li><li>Often approximate answers are acceptable.</li></ul>')">
+        Data Streams
+      </div>
+
+      <!-- Left upper node: Sampling -->
+      <div class="node blue" style="width: 120px; top: 170px; left: 140px;"
+           onclick="showInfo('Sampling',
+           '<ul><li>Reduces data size by keeping only a subset.</li><li>Two main tasks: Fixed proportion vs. Reservoir (fixed size).</li></ul>')">
+        Sampling
+      </div>
+      <!-- Subnodes for Sampling -->
+      <div class="node green" style="width: 120px; top: 90px; left: 70px;"
+           onclick="showInfo('Fixed Proportion Sampling',
+           '<ul><li>Keep a fraction (e.g., 1/10) of the stream.</li><li>Use hashing by key to select records fairly.</li></ul>')">
+        Fixed Proportion
+      </div>
+      <div class="node green" style="width: 120px; top: 90px; left: 230px;"
+           onclick="showInfo('Reservoir Sampling',
+           '<ul><li>Maintains a random sample of size s for an infinite stream.</li><li>Each element has equal chance s/n of being in the sample.</li></ul>')">
+        Reservoir Sampling
+      </div>
+
+      <!-- Right upper node: Weighted Sampling -->
+      <div class="node blue" style="width: 120px; top: 170px; left: 740px;"
+           onclick="showInfo('Weighted Sampling',
+           '<ul><li>Each element has a weight (importance).</li><li>Probability of selection proportional to weight.</li></ul>')">
+        Weighted Sampling
+      </div>
+      <!-- Subnodes for Weighted Sampling -->
+      <div class="node green" style="width: 140px; top: 90px; left: 650px;"
+           onclick="showInfo('Weighted Reservoir',
+           '<ul><li>Assign random scores based on weight.</li><li>Keep top-scoring elements in reservoir.</li></ul>')">
+        Weighted Reservoir
+      </div>
+      <div class="node green" style="width: 120px; top: 90px; left: 850px;"
+           onclick="showInfo('Use Cases',
+           '<ul><li>Prioritize high-value data (big spenders, etc.).</li><li>Ensure rare but important items can be included.</li></ul>')">
+        Use Cases
+      </div>
+
+      <!-- Left lower node: Sliding Window -->
+      <div class="node blue" style="width: 140px; top: 470px; left: 130px;"
+           onclick="showInfo('Sliding Window',
+           '<ul><li>Focus on last N elements of the stream.</li><li>Useful for real-time, recency-based queries.</li></ul>')">
+        Sliding Window
+      </div>
+      <!-- Subnodes for Sliding Window -->
+      <div class="node green" style="width: 120px; top: 560px; left: 60px;"
+           onclick="showInfo('Window Queries',
+           '<ul><li>Count distinct or frequent items in last N elements.</li><li>Useful in traffic monitoring, e-commerce, etc.</li></ul>')">
+        Queries
+      </div>
+      <div class="node green" style="width: 130px; top: 560px; left: 220px;"
+           onclick="showInfo('Practical Use',
+           '<ul><li>Can discard old data to reflect only the recent behavior.</li><li>Efficient for time-based analytics.</li></ul>')">
+        Practical Use
+      </div>
+
+      <!-- Right lower node: DGIM -->
+      <div class="node blue" style="width: 100px; top: 470px; left: 770px;"
+           onclick="showInfo('DGIM',
+           '<ul><li>Method for counting 1s in last N bits.</li><li>Stores O(log N) buckets.</li><li>Approx. 50% error bound.</li></ul>')">
+        DGIM
+      </div>
+      <!-- Subnodes for DGIM -->
+      <div class="node green" style="width: 120px; top: 560px; left: 700px;"
+           onclick="showInfo('Buckets',
+           '<ul><li>Each bucket has a power-of-2 number of 1s.</li><li>Merge older buckets to maintain at most 2 of each size.</li></ul>')">
+        Buckets
+      </div>
+      <div class="node green" style="width: 120px; top: 560px; left: 840px;"
+           onclick="showInfo('Error & Estimation',
+           '<ul><li>Estimate sum by summing all but the oldest bucket fully + half of the oldest bucket size.</li><li>Error up to 50% in worst case.</li></ul>')">
+        Error & Estimation
+      </div>
+    </div>
+
+    <div id="infoPanel">
+      <div class="infoTitle" id="infoTitle">Click on a concept to see details</div>
+      <div class="infoContent" id="infoContent">
+        Select any node in the mind map to display detailed information about that concept.
+      </div>
+    </div>
+
+    <div class="legend">
+      <div class="legendItem">
+        <div class="legendBox red"></div>
+        <span>Main Topic</span>
+      </div>
+      <div class="legendItem">
+        <div class="legendBox blue"></div>
+        <span>Major Subtopic</span>
+      </div>
+      <div class="legendItem">
+        <div class="legendBox green"></div>
+        <span>Key Details</span>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function showInfo(title, content) {
+      document.getElementById("infoPanel").style.display = "block";
+      document.getElementById("infoTitle").textContent = title;
+      document.getElementById("infoContent").innerHTML = content;
+    }
+  </script>
+</body>
+</html>
